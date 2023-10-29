@@ -1,21 +1,45 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import auth from "../../firebase/firebase.config";
+import { useState } from "react";
+
 
 const SignUp = () => {
+
+    const [signUpError, setSignUpError] = useState('');
+    const [success, setsucess] = useState('');
+
+
     const handleSignUp = e => {
+
+
+
+
         e.preventDefault();
         console.log('submited');
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log(email, password);
+
+         //Reset Error
+         setSignUpError('');
+         setsucess('');
+
+         
+if (password.length < 6) {
+    setSignUpError(' Password should be at least 6 characters (auth/weak-password).')
+    return;
+}
+       
         //create user
         createUserWithEmailAndPassword(auth, email, password)
             .then(result => {
                 console.log(result.user);
+                setsucess('User Created Successfully')
             })
             .catch(
                 error => {
                     console.error(error);
+                  setSignUpError(error.message);
                 }
             )
 
@@ -48,7 +72,15 @@ const SignUp = () => {
                             <button className="btn btn-primary">Sign Up</button>
                         </div>
                     </form>
+                   
                 </div>
+                {
+                   
+                   signUpError && <p className="italic text-sm text-slate-950">{signUpError}</p>
+                }
+                {
+                    success && <p className="font-serif text-sm text-green-600">{success}</p>
+                }
             </div>
         </div>
     );
