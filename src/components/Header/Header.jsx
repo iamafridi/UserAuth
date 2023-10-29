@@ -1,17 +1,19 @@
 import { NavLink } from "react-router-dom";
 
 const Header = () => {
+
 const navlink = <>
 
-<li><NavLink to="/" >Home</NavLink></li>
-<li><NavLink to="/signup" >SignUp</NavLink></li>
-<li><NavLink to="/signin" >SignIn</NavLink></li>
+<li><NavLink to="/"> Home </NavLink></li>
+<li><NavLink to="/signin" >Sign In</NavLink></li>
+<li><NavLink to="/signup" >Sign Up</NavLink></li>
+
 </>
 
 
     return (
         
-        <div className="navbar bg-base-100 h-[100vh] justify-center items-center">
+        <div className="navbar bg-base-100 ">
         <div className="flex-1 ">
           <a className="btn btn-ghost normal-case text-xl">User Auth</a>
         </div>
