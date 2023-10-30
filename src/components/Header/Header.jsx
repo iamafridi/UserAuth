@@ -15,7 +15,7 @@ const navlink = <>
         
         <div className="navbar bg-base-100 ">
         <div className="flex-1 ">
-          <a className="btn btn-ghost normal-case text-xl">User Auth</a>
+          <a className="btn btn-ghost normal-case text-xl "> <span className="border bg-emerald-500 font-thin text-white italic shadow-black border-l-pink-500 p-2 rounded-e-full pr-4" >User Auth</span></a>
         </div>
         <div className="flex-none">
           <ul className="menu menu-horizontal px-1">
