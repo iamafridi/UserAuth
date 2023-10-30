@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import auth from "../../firebase/firebase.config";
 
 const SignIn = () => {
@@ -12,7 +12,7 @@ const SignIn = () => {
         console.log(email, password);
 
         // creating user
-        createUserWithEmailAndPassword(auth , email, password)
+        signInWithEmailAndPassword(auth , email, password)
         .then(result =>{
             console.log(result.user);
         })

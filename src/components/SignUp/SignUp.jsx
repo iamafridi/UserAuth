@@ -22,7 +22,8 @@ const SignUp = () => {
         console.log('submited');
         const email = e.target.email.value;
         const password = e.target.password.value;
-        console.log(email, password);
+        const aceptedTerms = e.target.terms.checked;
+        console.log(email, password, aceptedTerms);
 
         //Reset Error
         setSignUpError('');
@@ -31,6 +32,10 @@ const SignUp = () => {
 
         if (password.length < 6) {
             setSignUpError(' Password should be at least 6 characters (auth/weak-password).')
+            return;
+        }
+        else if (!aceptedTerms){
+            setSignUpError('Warning : Please Accept our terms and conditions!')
             return;
         }
 
@@ -67,18 +72,26 @@ const SignUp = () => {
                             <label className="label">
                                 <span className="label-text">Password</span>
                             </label>
-                            <input type={showPassword ? "text" : "password"}
-                                placeholder="password"
-                                name="password"
-                                className="input input-bordered"
-                                required />
-                            <span className="text-xs m-2 p-2" onClick={() => setShowPassword(!showPassword)}>
+                            <div className="relative">
+                                <input type={showPassword ? "text" : "password"}
+                                    placeholder="password"
+                                    name="password"
+                                    className="input input-bordered w-full"
+                                    required />
+                                <span className=" text-xs m-1 p-0.5  top-1/3 absolute border border-cyan-600 rounded-2xl" onClick={() => setShowPassword(!showPassword)}>
 
-                                {
-                                    showPassword ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>
-                                }
+                                    {
+                                        showPassword ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>
+                                    }
 
-                            </span>
+                                </span>
+                            </div>
+                            <br />
+                            <div className="flex items-center mb-3 ">
+                                <input type="checkbox" name="terms" id="terms" value="" />
+                                <label className="ml-2 text-xs" htmlFor="terms">Accept out <a href="">Terms and Condition</a> </label>
+
+                            </div>
                             <label className="label">
                                 <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                             </label>
