@@ -24,7 +24,13 @@ const emailRef = useState(null);
         signInWithEmailAndPassword(auth, email, password)
             .then(result => {
                 console.log(result.user);
+                if(result.user.emailVerified){
+                    
                 setsucess('User Logged in Successfullly')
+                }
+                else{
+                    alert('Please Verify Your Email Address!.')
+                }
             })
             .catch(error => {
                 console.error(error);

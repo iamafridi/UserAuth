@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
 import auth from "../../firebase/firebase.config";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
@@ -15,16 +15,13 @@ const SignUp = () => {
 
 
     const handleSignUp = e => {
-
-
-
-
         e.preventDefault();
         console.log('submited');
+        const name = e.target.name.value;
         const email = e.target.email.value;
         const password = e.target.password.value;
         const aceptedTerms = e.target.terms.checked;
-        console.log(email, password, aceptedTerms);
+        console.log(name, email, password, aceptedTerms);
 
         //Reset Error
         setSignUpError('');
@@ -45,6 +42,20 @@ const SignUp = () => {
             .then(result => {
                 console.log(result.user);
                 setsucess('User Created Successfully')
+
+                //Update Profile
+                updateProfile(result.user,{
+                    displayName : name,
+                    photoURL: "https://pm1.aminoapps.com/7839/c4c7daae0f85bdda14820127b50a2f6c38350f60r1-735-1102v2_hq.jpg"
+                })
+                .then(()=> console.log("Profile Updated"))
+                .catch()
+
+                // Send Varification
+                sendEmailVerification(result.user)
+                .then(()=>{
+                    alert("Please Check Your Email And Verify Your Email");
+                })
             })
             .catch(
                 error => {
@@ -64,6 +75,10 @@ const SignUp = () => {
                 <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
                     <form onSubmit={handleSignUp} className="card-body">
                         <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Email</span>
+                            </label>
+                            <input type="text" placeholder="Your Name" className="input input-bordered" name="name" required />
                             <label className="label">
                                 <span className="label-text">Email</span>
                             </label>
