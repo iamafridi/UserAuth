@@ -1,12 +1,16 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import auth from "../../firebase/firebase.config";
 import { useState } from "react";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+
 
 
 const SignUp = () => {
 
     const [signUpError, setSignUpError] = useState('');
     const [success, setsucess] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+
 
 
     const handleSignUp = e => {
@@ -20,16 +24,16 @@ const SignUp = () => {
         const password = e.target.password.value;
         console.log(email, password);
 
-         //Reset Error
-         setSignUpError('');
-         setsucess('');
+        //Reset Error
+        setSignUpError('');
+        setsucess('');
 
-         
-if (password.length < 6) {
-    setSignUpError(' Password should be at least 6 characters (auth/weak-password).')
-    return;
-}
-       
+
+        if (password.length < 6) {
+            setSignUpError(' Password should be at least 6 characters (auth/weak-password).')
+            return;
+        }
+
         //create user
         createUserWithEmailAndPassword(auth, email, password)
             .then(result => {
@@ -39,7 +43,7 @@ if (password.length < 6) {
             .catch(
                 error => {
                     console.error(error);
-                  setSignUpError(error.message);
+                    setSignUpError(error.message);
                 }
             )
 
@@ -63,7 +67,18 @@ if (password.length < 6) {
                             <label className="label">
                                 <span className="label-text">Password</span>
                             </label>
-                            <input type="password" placeholder="password" name="password" className="input input-bordered" required />
+                            <input type={showPassword ? "text" : "password"}
+                                placeholder="password"
+                                name="password"
+                                className="input input-bordered"
+                                required />
+                            <span className="text-xs m-2 p-2" onClick={() => setShowPassword(!showPassword)}>
+
+                                {
+                                    showPassword ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>
+                                }
+
+                            </span>
                             <label className="label">
                                 <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                             </label>
@@ -72,11 +87,11 @@ if (password.length < 6) {
                             <button className="btn btn-primary">Sign Up</button>
                         </div>
                     </form>
-                   
+
                 </div>
                 {
-                   
-                   signUpError && <p className="italic text-sm text-slate-950">{signUpError}</p>
+
+                    signUpError && <p className="italic text-sm text-slate-950">{signUpError}</p>
                 }
                 {
                     success && <p className="font-serif text-sm text-green-600">{success}</p>
